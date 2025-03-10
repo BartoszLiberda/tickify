@@ -1,7 +1,12 @@
-import model.Ticket;
+import javax.swing.JFrame;
+import gui.Login;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        Ticket ticket = new Ticket("X", "Y", "Z");
+        Login login = new Login();
+        login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        login.setSize(700,700);
+        login.setVisible(true);
+        login.setLocation(500,400);
     }
 }
