@@ -1,17 +1,28 @@
+// TODO
+// - Add Sign Up Button + Function
+// - Add Logo
+// - Add Login Functions
+
 package gui;
 
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener ;
-import java.awt.event.ActionEvent;
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing. JTextField ;
+import javax.swing.JComponent;
+import javax.swing.JTextField;
 import javax.swing.JPasswordField;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.BoxLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 //import javax.swing.SwingConstants;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+//import javax.swing.Icon;
+//import javax.swing.ImageIcon;
 
 
 public class Login extends JFrame{
@@ -45,26 +56,41 @@ public class Login extends JFrame{
 
 public Login(){
     super( "Tickify");
-    setLayout(new FlowLayout());
-    JLabel icon = new JLabel("");
-    Icon icon_img = new ImageIcon(this.getClass().getResource("ticket.png"));
-    icon.setIcon(icon_img);
-    add(icon);
-    Username = new JTextField(25);
-    Username.setHorizontalAlignment(JTextField.CENTER);
-    add(Username);
-    Password = new JPasswordField(25);
-    Password.setHorizontalAlignment(JTextField.CENTER);
-    add(Username);
-    add(Password);
-    Loginbutton = new JButton("Login");
-    add(Loginbutton);
+    setLayout(new GridBagLayout());
+    JPanel loginPanel = new JPanel();
+    loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS)); 
+    loginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    // Username input
+    Username = new JTextField(20);
+    loginPanel.add(createLabeledPanel("Username:", Username));
 
-    LoginHandler handler = new LoginHandler();
-    Username.addActionListener(handler);
-    Password.addActionListener(handler);
-    Loginbutton.addActionListener(handler);
+    // Password input
+    Password = new JPasswordField(20);
+    loginPanel.add(createLabeledPanel("Password:", Password));
+
+    // Login button
+    Loginbutton = new JButton("Login");
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.add(Loginbutton);
+    loginPanel.add(buttonPanel);
+
+    // Add the login panel to the center
+    add(loginPanel, new GridBagConstraints());
+
+    // Event handling
+    Loginbutton.addActionListener(new LoginHandler());
+
+    // Window settings
+    setSize(1200, 800);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setLocationRelativeTo(null); // Centers the entire window
+    }
+
+    private JPanel createLabeledPanel(String label, JComponent component) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new JLabel(label));
+        panel.add(component);
+        return panel;
     }
 } 
-
-    
