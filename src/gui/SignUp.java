@@ -1,24 +1,21 @@
+package gui;
 import javax.swing.*;
 import java.awt.*;
-public class SignUp extends JFrame {
+
+public class SignUp extends JPanel {
     
 
     SignUp(){
-        setTitle("Sign Up");
+        
+        setLayout(null);
         setSize(1200, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        JPanel signuppanel = new JPanel();
-        signuppanel.setLayout(null);
-        signuppanel.setSize(1200, 600);
-        signuppanel.setBackground(new Color(0x2F2D49));
+        setBackground(new Color(0x2F2D49));
 
         ImageIcon icon = new ImageIcon("tickifylogo.png");
         JLabel banner = new JLabel(icon);
         banner.setLocation(415, 25);
         banner.setSize(400, 80);
-        signuppanel.add(banner);
+        add(banner);
 
         //first name
         JLabel fnameL = new JLabel("First Name:");
@@ -155,13 +152,16 @@ public class SignUp extends JFrame {
             }
         });
 
-        signuppanel.add(fnameL);signuppanel.add(fname);signuppanel.add(lnameL);signuppanel.add(lname);signuppanel.add(emailL);
-        signuppanel.add(email);signuppanel.add(uname);signuppanel.add(unameL);signuppanel.add(passL);signuppanel.add(pass);
-        signuppanel.add(signButton);add(signuppanel);
-        setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new SignUp();
+        add(fnameL);
+        add(fname);
+        add(lnameL);
+        add(lname);
+        add(emailL);
+        add(email);
+        add(uname);
+        add(unameL);
+        add(passL);
+        add(pass);
+        add(signButton);
     }
 }

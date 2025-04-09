@@ -1,102 +1,96 @@
+package gui;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Tickify extends JFrame {
+public class Login extends JPanel {
 /*
  * WebPage For Colours: https://www.rapidtables.com/web/color/RGB_Color.html
  * Main: White
  * Background: 0x2F2D49
 */
-    public Tickify() {
-        // Create a new JFrame object
-        setTitle("Tickify");
+    public Login(MainFrame mainframe) {
+        
+        setLayout(new GridBagLayout());
         setSize(1200, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setBackground(new Color(0x2F2D49));
 
-        JPanel loginpanel = new JPanel();
-        loginpanel.setLayout(null);
-        loginpanel.setSize(1200, 600);
-        loginpanel.setBackground(new Color(0x2F2D49));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
         ImageIcon icon = new ImageIcon("tickifylogo.png");
         JLabel banner = new JLabel(icon);
-        banner.setLocation(415, 25);
-        banner.setSize(400, 80);
-        loginpanel.add(banner);
+        add(banner, gbc);
 
         //username
 
         //define the username label and its positioning
-        JLabel usernameL = new JLabel("Username:");
-        usernameL.setLocation(450, 158);
-        usernameL.setSize(100, 25);
-
-        //define the username labels font styling and color
+        JLabel usernameL = new JLabel("Username");
         usernameL.setFont(new Font("Arial", Font.ITALIC | Font.BOLD, 18));
         usernameL.setForeground(Color.white);
+        gbc.gridy = 1;
+        add(usernameL, gbc);
 
         //define username field and position
-        JTextField username = new JTextField();
-        username.setLocation(450, 190);
-        username.setSize(300,30);
-
+        JTextField username = new JTextField(20);
         //username field styling and color
         username.setFont(new Font("Arial", Font.BOLD, 16));
         username.setBackground(new Color(0x2F2D49));
         username.setForeground(Color.white);
+        gbc.gridy = 2;
+        add(username, gbc);
 
         //password
 
         //define the password label style and positioning
-        JLabel passwordL = new JLabel("Password:");
-        passwordL.setLocation(450, 240);
-        passwordL.setSize(100, 25);
-
+        JLabel passwordL = new JLabel("Password");
         passwordL.setFont(new Font("Arial", Font.ITALIC | Font.BOLD, 18));
         passwordL.setForeground(Color.white);
+        gbc.gridy = 3;
+        add(passwordL, gbc);
 
         //define password field style and position
-        JPasswordField password = new JPasswordField();
-        password.setLocation(450, 272);
-        password.setSize(300, 30);
-
+        JPasswordField password = new JPasswordField(23);
         password.setBackground(new Color(0x2F2D49));
         password.setForeground(Color.white);
+        gbc.gridy = 4;
+        add(password, gbc);
 
 
         //login button
         JButton LogButton = new JButton("Login");
-        LogButton.setLocation(460, 330);
-        LogButton.setSize(280, 30);
-
         //login button styling and color
         LogButton.setFont(new Font("Arial", Font.BOLD, 22));
         LogButton.setForeground(Color.white);
         LogButton.setBackground(new Color(0x30FF6F));
+        gbc.gridy = 5;
+        add(LogButton, gbc);
 
         //sign up
         JButton signup = new JButton("Not a User? Sign up..");
         signup.setFont(new Font("Arial", Font.PLAIN, 12));
         signup.setForeground(Color.WHITE);
-        signup.setSize(180, 20);
-        signup.setLocation(510, 390);
         signup.setContentAreaFilled(false); //no background
         signup.setBorderPainted(false); //remove border
+        gbc.gridy = 6;
+        add(signup, gbc);
 
+        LogButton.addActionListener(e -> {
+            String enteredUsername = username.getText();
+            String enteredPassword = new String(password.getPassword());
 
-        //add all components to the login panel
-        loginpanel.add(username);
-        loginpanel.add(usernameL);
-        loginpanel.add(password);
-        loginpanel.add(passwordL);
-        loginpanel.add(LogButton);
-        loginpanel.add(signup);
+            if(isValidLogin(enteredUsername, enteredPassword)){
+                // GO TO MAIN PAGE
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Username or Password");
+                return;
+            }
+        });
 
-        add(loginpanel);
-        setVisible(true);
-    }
-    public static void main(String[] args) {
-        new Tickify();
+        signup.addActionListener(e ->{
+            mainframe.showPanel("signup");
+        });
     }
 }

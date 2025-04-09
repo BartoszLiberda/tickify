@@ -40,4 +40,8 @@ public class db {
             }
         }
     }
+
+    public boolean isValidLogin(String username, String password){
+        
+    }
 }
