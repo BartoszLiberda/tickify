@@ -1,4 +1,5 @@
 import model.Ticket;
+import model.User;
 import gui.MainFrame;
 
 public class App{

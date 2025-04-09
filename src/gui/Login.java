@@ -3,6 +3,8 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
+import dao.db;
+
 public class Login extends JPanel {
 /*
  * WebPage For Colours: https://www.rapidtables.com/web/color/RGB_Color.html
@@ -10,6 +12,8 @@ public class Login extends JPanel {
  * Background: 0x2F2D49
 */
     public Login(MainFrame mainframe) {
+        
+        db db = new db();
         
         setLayout(new GridBagLayout());
         setSize(1200, 600);
@@ -81,8 +85,9 @@ public class Login extends JPanel {
             String enteredUsername = username.getText();
             String enteredPassword = new String(password.getPassword());
 
-            if(isValidLogin(enteredUsername, enteredPassword)){
+            if(db.isValidLogin(enteredUsername, enteredPassword)){
                 // GO TO MAIN PAGE
+                JOptionPane.showMessageDialog(null, "HELL YEAH");
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid Username or Password");
                 return;

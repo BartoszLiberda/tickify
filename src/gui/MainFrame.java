@@ -18,7 +18,7 @@ public class MainFrame extends JFrame{
         cards = new JPanel(cardLayout);
 
         Login loginPanel = new Login(this);
-        SignUp signupPanel = new SignUp();
+        SignUp signupPanel = new SignUp(this);
 
         cards.add(loginPanel, "login");
         cards.add(signupPanel, "signup");
