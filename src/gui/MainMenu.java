@@ -75,10 +75,45 @@ public class MainMenu extends JFrame {
 
 
         //event listeners
+        vTickets.addActionListener(e -> {
+            rightPanel.removeAll();
+            if(1==1){
+                rightPanel.setLayout(new GridBagLayout());
+                JLabel ntheader = new JLabel("You Currently Have No Tickets");
+                ntheader.setFont(new Font("Arial", Font.BOLD, 20));
+                ntheader.setForeground(Color.white);
+                GridBagConstraints ntgbc = new GridBagConstraints();
+                ntgbc.gridx = 0;
+                ntgbc.gridy = 0;
+                ntgbc.anchor = GridBagConstraints.CENTER;
+                rightPanel.add(ntheader,ntgbc);
+                ntgbc.gridy = 1;
+                JButton createredirect = new JButton("Create Ticket");
+                createredirect.setPreferredSize(new Dimension(160, 30));
+                createredirect.setFont(new Font("Arial", Font.BOLD, 20));
+                createredirect.setForeground(Color.white);
+                createredirect.setFocusPainted(false);
+                createredirect.setBackground(new Color(0x3B0054));
+                rightPanel.add(createredirect,ntgbc);
+                    // update the panel
+                rightPanel.revalidate();
+                rightPanel.repaint();
+
+                //listener
+                createredirect.addActionListener(w -> {
+                    cTickets.doClick();
+                });
+            }
+            /*
+            else{
+                This is if tickets exist
+            }
+            */
+        });
         cTickets.addActionListener(e -> {
             // Remove all previous components
             rightPanel.removeAll();
-            rightPanel.setLayout(new GridLayout(5, 2, 10, 50)); // 5 rows, 2 columns
+            rightPanel.setLayout(new GridLayout(5, 2, 10, 50)); //layout setup
             
             // Create and add the header label
             JLabel header1 = new JLabel("Ticket", SwingConstants.RIGHT);
@@ -160,17 +195,17 @@ public class MainMenu extends JFrame {
 
 
             //listeners
-            resetB.addActionListener(s -> {
+            resetB.addActionListener(f -> {
                 // Clear all text fields and the text area
                 titlef.setText("");
                 emailField.setText("");
                 descField.setText("");
             });
-    
-            submitB.addActionListener(x -> {
+
+            submitB.addActionListener(f -> {
                 String title = titlef.getText();
                 String email = emailField.getText();
-    
+
                 if (title.matches(".*[^a-zA-Z ].*")) {
                     JOptionPane.showMessageDialog(null, "Names can't contain symbols!");
                     return;
@@ -179,68 +214,16 @@ public class MainMenu extends JFrame {
                     JOptionPane.showMessageDialog(null, "Email must contain '@' and '.'");
                     return;
                 }
-            });
-
-            // update the panel
-            rightPanel.revalidate();
-            rightPanel.repaint();
         });
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
-
+        // update the panel
+        rightPanel.revalidate();
+        rightPanel.repaint();
+        });
         frame.add(mainsplit);
         frame.setVisible(true);
     }
     public static void main(String[] args) {
         new MainMenu();
-    }
-
-    public void createticket(){
-
-
-
-        // Second Row holds the Email
-
-        //third Row
-        JLabel descL = new JLabel("Issue Description:");
-        descL.setFont(new Font("Arial", Font.ITALIC | Font.BOLD, 14));
-        descL.setForeground(Color.white);
-
-        JTextArea descField = new JTextArea();
-        descField.setLineWrap(true);
-        descField.setWrapStyleWord(true);
-        descField.setBackground(Color.white);
-        descField.setForeground(new Color(0x2F2D49));
-        descField.setFont(new Font("Arial", Font.BOLD, 15));
-
-        //reset and submit
-        //submit button
-        JButton submitB = new JButton("Submit");
-
-        //submit button styling and color
-        submitB.setFont(new Font("Arial", Font.BOLD, 20));
-        submitB.setForeground(Color.white);
-        submitB.setBackground(new Color(0x30FF6F));
-
-        //reset button
-        JButton resetB = new JButton("Reset");
-        //reset button styling and color
-        resetB.setFont(new Font("Arial", Font.BOLD, 20));
-        resetB.setForeground(Color.white);
-        resetB.setBackground(new Color(0xd41f2d));
-
-        //event listeners
     }
 }
