@@ -77,7 +77,7 @@ public class MainMenu extends JFrame {
         //event listeners
         vTickets.addActionListener(e -> {
             rightPanel.removeAll();
-            if(1==1){
+            if(1==1){ //temp solution for no db connection
                 rightPanel.setLayout(new GridBagLayout());
                 JLabel ntheader = new JLabel("You Currently Have No Tickets");
                 ntheader.setFont(new Font("Arial", Font.BOLD, 20));
