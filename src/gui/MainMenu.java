@@ -96,7 +96,7 @@ public class MainMenu extends JFrame {
             JTextField titlef = new JTextField();
             titlef.setForeground(Color.white);
             titlef.setFont(new Font("Arial", Font.BOLD, 14));
-            titlef.setPreferredSize(new Dimension(250, 30));
+            titlef.setPreferredSize(new Dimension(200, 30));
             titlef.setBackground(new Color(0x2F2D49));
             JLabel titleL = new JLabel("Title:", SwingConstants.CENTER);
             titleL.setPreferredSize(new Dimension(200, 30));
@@ -117,7 +117,7 @@ public class MainMenu extends JFrame {
             emailField.setForeground(Color.white);
             emailField.setFont(new Font("Arial", Font.BOLD, 14));
             emailField.setBackground(new Color(0x2F2D49));
-            emailField.setPreferredSize(new Dimension(250, 30));
+            emailField.setPreferredSize(new Dimension(200, 30));
             emailpanel.add(emailLabel);
             emailpanel.add(emailField);
             rightPanel.add(emailpanel);
