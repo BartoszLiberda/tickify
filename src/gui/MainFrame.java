@@ -17,11 +17,13 @@ public class MainFrame extends JFrame{
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
 
-        Login loginPanel = new Login(this);
         SignUp signupPanel = new SignUp(this);
+        MainMenu mainMenuPanel = new MainMenu(this);
+        Login loginPanel = new Login(this, mainMenuPanel);
 
         cards.add(loginPanel, "login");
         cards.add(signupPanel, "signup");
+        cards.add(mainMenuPanel, "mainmenu");
 
         add(cards);
         setVisible(true);

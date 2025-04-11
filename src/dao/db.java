@@ -4,7 +4,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import gui.MainMenu;
 import io.github.cdimascio.dotenv.Dotenv;
+import model.User;
+import model.Ticket;
 
 public class db {
     Dotenv dotenv = Dotenv.load();
@@ -17,6 +23,16 @@ public class db {
     Connection con = null;
     PreparedStatement pstat = null;
     int i = 0;
+
+    private MainMenu mainMenu;
+
+    public db(){
+
+    }
+
+    public db(MainMenu mainMenu){
+        this.mainMenu = mainMenu;
+    }
 
     public void newTicket(String description, String status, String priority){
         try{
@@ -71,10 +87,11 @@ public class db {
     public boolean isValidLogin(String username, String userpassword){
         try{
             con = DriverManager.getConnection(url, user, password);
-            pstat = con.prepareStatement("SELECT username, password, name, surname, email, type FROM Users");
+            pstat = con.prepareStatement("SELECT id, username, password, name, surname, email, type FROM Users");
             ResultSet i = pstat.executeQuery();
 
             while(i.next()){
+                int userIdDB = i.getInt("id");
                 String usernameDB = i.getString("username");
                 String passwordDB = i.getString("password");
                 String nameDB = i.getString("name");
@@ -83,7 +100,8 @@ public class db {
                 String typeDB = i.getString("type");
 
                 if(username.equals(usernameDB) && userpassword.equals(passwordDB)){
-                    // user type shit 
+                    User currentUser = new User(userIdDB,nameDB,surnameDB,emailDB,usernameDB,passwordDB,typeDB);
+                    mainMenu.saveUser(currentUser);
                     return true;
                 }
             }
@@ -102,5 +120,40 @@ public class db {
             }
         }
         return false;
+    }
+
+    public List<Ticket> getUserTickets(int userID){
+        List<Ticket> tickets = new ArrayList<>() ;
+        try{
+            con = DriverManager.getConnection(url, user, password);
+            pstat = con.prepareStatement("SELECT * FROM Ticket WHERE status != 'Closed' AND CustomerID = (?)");
+            pstat.setInt(1, userID);
+            ResultSet i = pstat.executeQuery();
+
+            while(i.next()){
+                int ticektIdDB = i.getInt("id");
+                String ticketDescDB = i.getString("description");
+                String ticketStatusDB = i.getString("status");
+                int customerIdDB = i.getInt("customerID");
+                String ticektPriorityDB = i.getString("priority");
+                int agentIdDB = i.getInt("agentID");
+
+                Ticket ticket = new Ticket(ticektIdDB,ticketDescDB,ticketStatusDB,customerIdDB,ticektPriorityDB,agentIdDB);
+                tickets.add(ticket);
+            }
+        }
+        catch(SQLException sqlException){
+            sqlException.printStackTrace();
+        }
+        finally{
+            try{
+                pstat.close();
+                con.close();
+            }
+            catch(Exception exception){
+                exception.printStackTrace();
+            }
+        }
+        return tickets;
     }
 }

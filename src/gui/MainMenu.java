@@ -1,13 +1,32 @@
+package gui;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
-public class MainMenu extends JFrame {
-    MainMenu(){
-        JFrame frame = new JFrame("Tickify");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 600);
+import model.User;
+import model.Ticket;
+import dao.db;
 
-        JPanel mainsplit = new JPanel(new GridBagLayout()); //main screen split of 20/80
+public class MainMenu extends JPanel {
+
+    db db = new db();
+
+    private int userID;
+    private String userType;
+
+    private List<Ticket> userTickets;
+
+    public void saveUser(User user){
+        userID = user.getId();
+        userType = user.getType();
+    }
+
+    MainMenu(MainFrame mainFrame){
+        
+        setLayout(new GridBagLayout());
+        setSize(1200, 600);
+
         JPanel leftPanel = new JPanel(new GridLayout(5, 1)); //grid set up layout for side nav space
         leftPanel.setBackground(new Color(0x242334));
         JPanel rightPanel = new JPanel();
@@ -65,50 +84,75 @@ public class MainMenu extends JFrame {
         mainsplitgbc.gridx = 0;
         mainsplitgbc.weightx = 0.2;
         mainsplitgbc.weighty = 1.0;
-        mainsplit.add(leftPanel, mainsplitgbc);
+        add(leftPanel, mainsplitgbc);
 
         // Right panel 80%
         mainsplitgbc.gridx = 1;
         mainsplitgbc.weightx = 0.8;
         mainsplitgbc.weighty = 1.0;
-        mainsplit.add(rightPanel, mainsplitgbc);
+        add(rightPanel, mainsplitgbc);
 
 
         //event listeners
         vTickets.addActionListener(e -> {
             rightPanel.removeAll();
-            if(1==1){ //temp solution for no db connection
-                rightPanel.setLayout(new GridBagLayout());
-                JLabel ntheader = new JLabel("You Currently Have No Tickets");
-                ntheader.setFont(new Font("Arial", Font.BOLD, 20));
-                ntheader.setForeground(Color.white);
-                GridBagConstraints ntgbc = new GridBagConstraints();
-                ntgbc.gridx = 0;
-                ntgbc.gridy = 0;
-                ntgbc.anchor = GridBagConstraints.CENTER;
-                rightPanel.add(ntheader,ntgbc);
-                ntgbc.gridy = 1;
-                JButton createredirect = new JButton("Create Ticket");
-                createredirect.setPreferredSize(new Dimension(160, 30));
-                createredirect.setFont(new Font("Arial", Font.BOLD, 20));
-                createredirect.setForeground(Color.white);
-                createredirect.setFocusPainted(false);
-                createredirect.setBackground(new Color(0x3B0054));
-                rightPanel.add(createredirect,ntgbc);
-                    // update the panel
-                rightPanel.revalidate();
-                rightPanel.repaint();
-
-                //listener
-                createredirect.addActionListener(w -> {
-                    cTickets.doClick();
-                });
+            if("u".equals(userType)){
+                userTickets = db.getUserTickets(userID);
+                if(userTickets.isEmpty()){
+                    rightPanel.setLayout(new GridBagLayout());
+                    JLabel ntheader = new JLabel("You Currently Have No Tickets");
+                    ntheader.setFont(new Font("Arial", Font.BOLD, 20));
+                    ntheader.setForeground(Color.white);
+                    GridBagConstraints ntgbc = new GridBagConstraints();
+                    ntgbc.gridx = 0;
+                    ntgbc.gridy = 0;
+                    ntgbc.anchor = GridBagConstraints.CENTER;
+                    rightPanel.add(ntheader,ntgbc);
+                    ntgbc.gridy = 1;
+                    JButton createredirect = new JButton("Create Ticket");
+                    createredirect.setPreferredSize(new Dimension(160, 30));
+                    createredirect.setFont(new Font("Arial", Font.BOLD, 20));
+                    createredirect.setForeground(Color.white);
+                    createredirect.setFocusPainted(false);
+                    createredirect.setBackground(new Color(0x3B0054));
+                    rightPanel.add(createredirect,ntgbc);
+                        // update the panel
+                    rightPanel.revalidate();
+                    rightPanel.repaint();
+    
+                    //listener
+                    createredirect.addActionListener(w -> {
+                        cTickets.doClick();
+                    });
+                }
+                else{
+                    rightPanel.setLayout(new GridBagLayout());
+                    JLabel ntheader = new JLabel("You Have Tickets");
+                    ntheader.setFont(new Font("Arial", Font.BOLD, 20));
+                    ntheader.setForeground(Color.white);
+                    GridBagConstraints ntgbc = new GridBagConstraints();
+                    ntgbc.gridx = 0;
+                    ntgbc.gridy = 0;
+                    ntgbc.anchor = GridBagConstraints.CENTER;
+                    rightPanel.add(ntheader,ntgbc);
+                    ntgbc.gridy = 1;
+                    JButton createredirect = new JButton("Create Ticket");
+                    createredirect.setPreferredSize(new Dimension(160, 30));
+                    createredirect.setFont(new Font("Arial", Font.BOLD, 20));
+                    createredirect.setForeground(Color.white);
+                    createredirect.setFocusPainted(false);
+                    createredirect.setBackground(new Color(0x3B0054));
+                    rightPanel.add(createredirect,ntgbc);
+                        // update the panel
+                    rightPanel.revalidate();
+                    rightPanel.repaint();
+    
+                    //listener
+                    createredirect.addActionListener(w -> {
+                        cTickets.doClick();
+                    });
+                }
             }
-            /*
-            else{
-                This is if tickets exist
-            }
-            */
         });
         cTickets.addActionListener(e -> {
             // Remove all previous components
@@ -220,10 +264,5 @@ public class MainMenu extends JFrame {
         rightPanel.revalidate();
         rightPanel.repaint();
         });
-        frame.add(mainsplit);
-        frame.setVisible(true);
-    }
-    public static void main(String[] args) {
-        new MainMenu();
     }
 }

@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import dao.db;
+import model.User;
 
 public class Login extends JPanel {
 /*
@@ -11,9 +12,9 @@ public class Login extends JPanel {
  * Main: White
  * Background: 0x2F2D49
 */
-    public Login(MainFrame mainframe) {
+    public Login(MainFrame mainframe, MainMenu mainMenu) {
         
-        db db = new db();
+        db db = new db(mainMenu);
         
         setLayout(new GridBagLayout());
         setSize(1200, 600);
@@ -86,8 +87,7 @@ public class Login extends JPanel {
             String enteredPassword = new String(password.getPassword());
 
             if(db.isValidLogin(enteredUsername, enteredPassword)){
-                // GO TO MAIN PAGE
-                JOptionPane.showMessageDialog(null, "HELL YEAH");
+                mainframe.showPanel("mainmenu");
             } else {
                 JOptionPane.showMessageDialog(null, "Invalid Username or Password");
                 return;
